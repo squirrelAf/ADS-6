@@ -5,8 +5,8 @@
 
 template<typename T>
 class TPQueue {
-  private:
-  struct Node {
+ private:
+ struct Node {
     T data;
     Node* next;
     explicit Node(T data, Node* next = nullptr) : data(data), next(next) {}
