@@ -1,10 +1,11 @@
 // Copyright 2022 NNTU-CS
 #ifndef INCLUDE_TPQUEUE_H_
 #define INCLUDE_TPQUEUE_H_
+#include <stdexcept>
 
 template<typename T>
 class TPQueue {
-   private:
+  private:
   struct Node {
     T data;
     Node* next;
@@ -25,17 +26,17 @@ class TPQueue {
   bool isEmpty() const { return front == nullptr; }
 
   void push(const T& value) {
-    Node* nod = new Node(value);
+    Node* node = new Node(value);
     if (isEmpty() || front->data.prior < value.prior) {
       nod->next = front;
-      front = nod;
+      front = node;
     } else {
       Node* current = front;
       while (current->next && current->next->data.prior >= value.prior) {
         current = current->next;
       }
       node->next = current->next;
-      current->next = nod;
+      current->next = node;
     }
   }
 
