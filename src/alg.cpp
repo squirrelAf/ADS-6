@@ -1,53 +1,63 @@
 // Copyright 2021 NNTU-CS
-#include <iostream>
-#include <string>
-
-struct SYM {
-    char ch;
-    int prior;
-    
-    SYM(char s, int p) : ch(s), prior(p) {}
-};
-struct Node {
-    SYM data;
-    Node* next;
-    Node(const SYM& s) : data(s), next(nullptr) {}
-};
-class TPQueue {
-private:
-    Node* head;
-    
-public:
-    TPQueue() : head(nullptr) {}
-    
-    ~TPQueue() {
-        while (head != nullptr) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
-        }
-    }
-    void enqueue(const SYM& sym) {
-        Node* newNode = new Node(sym);
-        if (!head || sym.prior > head->data.prior) {
-            newNode->next = head;
-            head = newNode;
-        }; else {
-            Node* current = head;
-            while (current->next && current->next->data.prior >= sym.prior) {
-                current = current->next;
-            }
-            newNode->next = current->next;
-            current->next = newNode;
-        }
-    }
-    SYM dequeue() {
-        if (!head) {
-            throw std::runtime_error("Очередь пустая");
-        }
-        Node* temp = head;
-        head = head->next;
-        SYM result = temp->data;
-        delete temp;
-        return result;
-    }
+#ifndef INCLUDE_TPQUEUE_H_
+ #define INCLUDE_TPQUEUE_H_
+ template<typename T>
+ class TPQueue {
+  private:
+   struct Node {
+     T data;
+     Node* next;
+     Node(T data, Node* next = nullptr) : data(data), next(next) {}
+   };
+ 
+   Node* front;
+ 
+  public:
+   TPQueue() : front(nullptr) {}
+ 
+   ~TPQueue() {
+     while (!isEmpty()) {
+       pop();
+     }
+   }
+ 
+   bool isEmpty() const { return front == nullptr; }
+ 
+   void push(const T& value) {
+     Node* node = new Node(value);
+     if (isEmpty() || front->data.prior < value.prior) {
+       node->next = front;
+       front = node;
+     } else {
+       Node* current = front;
+       while (current->next && current->next->data.prior >= value.prior) {
+         current = current->next;
+       }
+       node->next = current->next;
+       current->next = node;
+     }
+   }
+ 
+   T pop() {
+     if (isEmpty()) {
+       throw std::out_of_range("Queue is empty");
+     }
+     Node* t = front;
+     front = front->next;
+     T data = t->data;
+     delete t;
+     return data;
+   }
+ 
+   T peek() const {
+     if (isEmpty()) {
+       throw std::out_of_range("Queue is empty");
+     }
+     return front->data;
+   }
+ };
+ 
+ struct SYM {
+   char ch;
+   int prior;
+ };
