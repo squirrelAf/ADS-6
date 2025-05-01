@@ -28,7 +28,7 @@ class TPQueue {
   void push(const T& value) {
     Node* node = new Node(value);
     if (isEmpty() || front->data.prior < value.prior) {
-      nod->next = front;
+      node->next = front;
       front = node;
     } else {
       Node* current = front;
