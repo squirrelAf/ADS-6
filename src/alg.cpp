@@ -32,7 +32,7 @@ public:
         if (!head || sym.prior > head->data.prior) {
             newNode->next = head;
             head = newNode;
-        } else {
+        }; else {
             Node* current = head;
             while (current->next && current->next->data.prior >= sym.prior) {
                 current = current->next;
