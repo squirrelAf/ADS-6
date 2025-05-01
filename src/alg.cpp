@@ -1,6 +1,7 @@
 // Copyright 2021 NNTU-CS
 #ifndef INCLUDE_TPQUEUE_H_
- #define INCLUDE_TPQUEUE_H_
+#define INCLUDE_TPQUEUE_H_
+#endif INCLUDE_TPQUEUE_H_
  template<typename T>
  class TPQueue {
   private:
@@ -9,9 +10,7 @@
      Node* next;
      Node(T data, Node* next = nullptr) : data(data), next(next) {}
    };
- 
    Node* front;
- 
   public:
    TPQueue() : front(nullptr) {}
  
@@ -20,7 +19,6 @@
        pop();
      }
    }
- 
    bool isEmpty() const { return front == nullptr; }
  
    void push(const T& value) {
@@ -37,7 +35,6 @@
        current->next = node;
      }
    }
- 
    T pop() {
      if (isEmpty()) {
        throw std::out_of_range("Queue is empty");
@@ -48,7 +45,6 @@
      delete t;
      return data;
    }
- 
    T peek() const {
      if (isEmpty()) {
        throw std::out_of_range("Queue is empty");
@@ -56,8 +52,8 @@
      return front->data;
    }
  };
- 
  struct SYM {
    char ch;
    int prior;
  };
+
